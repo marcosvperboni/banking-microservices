@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+jwt:
+  secret: ${JWT_SECRET:change-me-change-me-change-me-change-me-32b}
+
+gateway:
+  routes:
+    - prefix: /api/v1/auth
+      uri: ${CUSTOMER_SERVICE_URI:http://localhost:8081}
+    - prefix: /api/v1/customers
+      uri: ${CUSTOMER_SERVICE_URI:http://localhost:8081}
+    - prefix: /api/v1/accounts
+      uri: ${ACCOUNT_SERVICE_URI:http://localhost:8082}
+    - prefix: /api/v1/transactions
+      uri: ${TRANSACTION_SERVICE_URI:http://localhost:8083}
+    - prefix: /api/v1/notifications
+      uri: ${NOTIFICATION_SERVICE_URI:http://localhost:8084}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

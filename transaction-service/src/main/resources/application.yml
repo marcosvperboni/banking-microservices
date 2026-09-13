@@ -1,0 +1,36 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: transaction-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/transactiondb
+    username: ${DB_USER:banking}
+    password: ${DB_PASSWORD:banking}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+services:
+  account:
+    base-url: http://${ACCOUNT_SERVICE_HOST:localhost}:${ACCOUNT_SERVICE_PORT:8082}
+
+app:
+  kafka:
+    topic:
+      transaction-events: transaction-events
+
+jwt:
+  secret: ${JWT_SECRET:change-me-change-me-change-me-change-me-32b}
+  expiration-ms: ${JWT_EXPIRATION_MS:3600000}

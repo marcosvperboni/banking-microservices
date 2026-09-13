@@ -1,0 +1,7 @@
+package com.marcosperboni.banking.customer.api.dto;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+public record UpdateCustomerRequest(@NotBlank String fullName, @NotBlank @Email String email) {
+}
